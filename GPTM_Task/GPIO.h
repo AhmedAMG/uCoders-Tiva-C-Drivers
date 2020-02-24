@@ -72,4 +72,6 @@ void GPIO_ConfigInterrupt(GPIO_PORT port, uint8_t pins, GPIO_SENSE sense, GPIO_S
 void GPIO_SetIntHandler(uint8_t pin, void (*function) (void));
 void GPIOF_ISR(void);
 
+void TIMER0_Handler(void);
+
 #endif /* GPIO_H_ */

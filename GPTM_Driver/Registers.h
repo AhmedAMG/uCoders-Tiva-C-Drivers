@@ -17,6 +17,7 @@
 #define SYSCTL_RCGCGPIO_R       (*((volatile uint32_t *)0x400FE608))
 #define SYSCTL_GPIOHBCTL_R      (*((volatile uint32_t *)0x400FE06C))
 #define SYSCTL_RCGCTIMER_R      (*((volatile uint32_t *)0x400FE604))
+#define SYSCTL_RCGCWTIMER_R      (*((volatile uint32_t *)0x400FE65C))
 
 #define CorePeripheralBase 0xE000E000
 
@@ -132,6 +133,42 @@
 
 //*****************************************************************************
 //
+// Timer registers offsets
+//
+//*****************************************************************************
+#define TIMERCFG            (0x0000)
+#define TIMERTAMR           (0x0004)
+#define TIMERTBMR           (0x0008)
+#define TIMERCTL            (0x000C)
+#define TIMERSYNC           (0x0010)
+#define TIMERIMR            (0x0018)
+#define TIMERRIS            (0x001C)
+#define TIMERMIS            (0x0020)
+#define TIMERICR            (0x0024)
+#define TIMERTAILR          (0x0028)
+#define TIMERTBILR          (0x002C)
+#define TIMERTAMATCHR       (0x0030)
+#define TIMERTBMATCHR       (0x0034)
+#define TIMERTAPR           (0x0038)
+#define TIMERTBPR           (0x003C)
+#define TIMERTAPMR          (0x0040)
+#define TIMERTBPMR          (0x0044)
+#define TIMERTAR            (0x0048)
+#define TIMERTBR            (0x004C)
+#define TIMERTAV            (0x0050)
+#define TIMERTBV            (0x0054)
+#define TIMERRTCPD          (0x0058)
+#define TIMERTAPS           (0x005C)
+#define TIMERTBPS           (0x0060)
+#define TIMERTAPV           (0x0064)
+#define TIMERTBPV           (0x0068)
+#define TIMERPP             (0x0FC0)
+
+
+
+
+//*****************************************************************************
+//
 // Timer registers (TIMER0)
 //
 //*****************************************************************************
@@ -162,7 +199,6 @@
 #define TIMER0_TAPV_R           (*((volatile uint32_t *)0x40030064))
 #define TIMER0_TBPV_R           (*((volatile uint32_t *)0x40030068))
 #define TIMER0_PP_R             (*((volatile uint32_t *)0x40030FC0))
-
 
 
 //*****************************************************************************
@@ -197,6 +233,41 @@
 #define TIMER1_TAPV_R           (*((volatile uint32_t *)0x40031064))
 #define TIMER1_TBPV_R           (*((volatile uint32_t *)0x40031068))
 #define TIMER1_PP_R             (*((volatile uint32_t *)0x40031FC0))
+
+
+
+//*****************************************************************************
+//
+// Timer registers (TIMER5)
+//
+//*****************************************************************************
+#define TIMER5_CFG_R            (*((volatile uint32_t *)0x40035000))
+#define TIMER5_TAMR_R           (*((volatile uint32_t *)0x40035004))
+#define TIMER5_TBMR_R           (*((volatile uint32_t *)0x40035008))
+#define TIMER5_CTL_R            (*((volatile uint32_t *)0x4003500C))
+#define TIMER5_SYNC_R           (*((volatile uint32_t *)0x40035010))
+#define TIMER5_IMR_R            (*((volatile uint32_t *)0x40035018))
+#define TIMER5_RIS_R            (*((volatile uint32_t *)0x4003501C))
+#define TIMER5_MIS_R            (*((volatile uint32_t *)0x40035020))
+#define TIMER5_ICR_R            (*((volatile uint32_t *)0x40035024))
+#define TIMER5_TAILR_R          (*((volatile uint32_t *)0x40035028))
+#define TIMER5_TBILR_R          (*((volatile uint32_t *)0x4003502C))
+#define TIMER5_TAMATCHR_R       (*((volatile uint32_t *)0x40035030))
+#define TIMER5_TBMATCHR_R       (*((volatile uint32_t *)0x40035034))
+#define TIMER5_TAPR_R           (*((volatile uint32_t *)0x40035038))
+#define TIMER5_TBPR_R           (*((volatile uint32_t *)0x4003503C))
+#define TIMER5_TAPMR_R          (*((volatile uint32_t *)0x40035040))
+#define TIMER5_TBPMR_R          (*((volatile uint32_t *)0x40035044))
+#define TIMER5_TAR_R            (*((volatile uint32_t *)0x40035048))
+#define TIMER5_TBR_R            (*((volatile uint32_t *)0x4003504C))
+#define TIMER5_TAV_R            (*((volatile uint32_t *)0x40035050))
+#define TIMER5_TBV_R            (*((volatile uint32_t *)0x40035054))
+#define TIMER5_RTCPD_R          (*((volatile uint32_t *)0x40035058))
+#define TIMER5_TAPS_R           (*((volatile uint32_t *)0x4003505C))
+#define TIMER5_TBPS_R           (*((volatile uint32_t *)0x40035060))
+#define TIMER5_TAPV_R           (*((volatile uint32_t *)0x40035064))
+#define TIMER5_TBPV_R           (*((volatile uint32_t *)0x40035068))
+#define TIMER5_PP_R             (*((volatile uint32_t *)0x40035FC0))
 
 
 #endif /* REGISTERS_H_ */

@@ -9,6 +9,8 @@
 #define LED_BLUE PIN2
 #define LED_GREEN PIN3
 
+void TIMER5_Handler(void);
+
 /**
  * main.c
  */
@@ -19,54 +21,34 @@ int main(void)
     GPIO_PadSet(PORTF, LED_RED, DRIVE_8m, PAD_NPU_NPD);
     GPIODirectionModeSet(PORTF,LED_RED, MODE_OUT);
 
-    //Provide the clock to the timer0
-    SYSCTL_RCGCTIMER_R = (1<<0);
-
-    //Ensure that the timer is not enabled
-    TIMER0_CTL_R &= ~((1<<0));
-
-    //Enable timer interrupt from the NVIC
-    NVIC_Enable(19);
-
-    //Write the GPTMCFG with 0
-    TIMER0_CFG_R = 0x00000000;
-
-    //16bit mode
-    TIMER0_CFG_R = 0x04;
-
-    //Periodic mode = 0x02, Count down
-    TIMER0_TAMR_R &= ~(0x03);
-    TIMER0_TAMR_R |= (0x02);
-
-    //Count up
-    //TIMER0_TAMR_R |= (1<<4); //Mystery: Why the true prescaler does NOT have the same meaning of the time extension !!!
+    TIMER_Init(TIM5_B, TIMER_MODE_PERIODIC, COUNT_DOWN, STALL_ENABLE);
 
     //Load Initial value
-    TIMER0_TAILR_R = 0x00F42400; //In individual/split mode: it will ignore the F4 part
+    TIMER_SetIntervalLoad(TIM5_B, 0x00002400);
 
     //Load the prescaler
-    TIMER0_TAPR_R = 0x6C8;
+    TIMER_SetPrescalar(TIM5_B, 0xF4);
 
-    //Interrupt Masks (Overflow interrupt)
-    TIMER0_IMR_R |= (1<<0);
+    //Load the match register
+    //TIMER_SetMatch(TIM5_B, 0x0001200); //50% duty cycle if 1200
 
-    //Freeze while debugging
-    TIMER0_CTL_R |= (1<<1);
+    TIMER_EnableAndSetIntISR(TIM5_B,INT_NON_CAPTURE_MATCH,TIMER5_Handler);
+    TIMER_EnableAndSetIntISR(TIM5_B,INT_TIMEOUT,TIMER5_Handler);
 
-    //Enable the timer
-    TIMER0_CTL_R |= (1<<0);
+    TIMER_EnableSnapshot(TIM5_B);
+
+    TIMER_Start(TIM5_B);
 
     while(1){
 
     }
 
-	return 0;
+    return 0;
 }
 
-void TIMER0_Handler(void){
+void TIMER5_Handler(void){
     if((GPIORead(PORTF, LED_RED)&LED_RED) == 0) GPIOWrite(PORTF, LED_RED, LED_RED);
     else GPIOWrite(PORTF, LED_RED, LOW);
 
-    TIMER0_ICR_R |= (1<<0);
 }
 

@@ -48,12 +48,12 @@ void GPIODirectionModeSet(GPIO_PORT port, uint8_t pins, GPIO_MODE mode){
     uint8_t port_index = (((port >> 12) & 0xFF) - 4);
     if(port_index >= 32) port_index = port_index - 28;
 
-    volatile uint32_t *reg_afsel = port + GPIOAFSEL;
+    volatile uint32_t *reg_afsel = (volatile uint32_t *)(port + GPIOAFSEL);
     reg_afsel = port_index < 4? reg_afsel + BusSelection[port_index]*0x15000 : reg_afsel + BusSelection[port_index]*0xE000;
     uint32_t data_afsel = *reg_afsel;
     data_afsel &= ~(pins);
 
-    volatile uint32_t *reg_dir = port + GPIODIR;
+    volatile uint32_t *reg_dir = (volatile uint32_t *)(port + GPIODIR);
     reg_dir = port_index < 4? reg_dir + BusSelection[port_index]*0x15000 : reg_dir + BusSelection[port_index]*0xE000;
     uint32_t data_dir = *reg_dir;
     data_dir &= ~(pins);
@@ -77,7 +77,7 @@ uint8_t GPIODirectionGet(GPIO_PORT port, uint8_t pins){
     uint8_t port_index = (((port >> 12) & 0xFF) - 4);
     if(port_index >= 32) port_index = port_index - 28;
 
-    volatile uint32_t *reg_dir = port + GPIODIR;
+    volatile uint32_t *reg_dir = (volatile uint32_t *)(port + GPIODIR);
     reg_dir = port_index < 4? reg_dir + BusSelection[port_index]*0x15000 : reg_dir + BusSelection[port_index]*0xE000;
     uint32_t data_dir = *reg_dir;
     data_dir = (uint8_t)(data_dir & (pins));
@@ -88,7 +88,7 @@ uint8_t GPIOModeGet(GPIO_PORT port, uint8_t pins){
     uint8_t port_index = (((port >> 12) & 0xFF) - 4);
     if(port_index >= 32) port_index = port_index - 28;
 
-    volatile uint32_t *reg_afsel = port + GPIOAFSEL;
+    volatile uint32_t *reg_afsel = (volatile uint32_t *)(port + GPIOAFSEL);
     reg_afsel = port_index < 4? reg_afsel + BusSelection[port_index]*0x15000 : reg_afsel + BusSelection[port_index]*0xE000;
     uint32_t data_afsel = *reg_afsel;
     data_afsel = (uint8_t)(data_afsel & (pins));
@@ -123,9 +123,9 @@ void GPIO_PadSet(GPIO_PORT port, uint8_t pins, GPIO_CURRENT strength, GPIO_PAD p
     uint8_t port_index = (((port >> 12) & 0xFF) - 4);
     if(port_index >= 32) port_index = port_index - 28;
 
-    volatile uint32_t *reg_strength = port + (GPIODR2R) + 4*(strength);
-    volatile uint32_t *reg_pad = port + (GPIOODR) + 4*(pad);
-    volatile uint32_t *reg_den = port + (GPIODEN);
+    volatile uint32_t *reg_strength = (volatile uint32_t *)(port + (GPIODR2R) + 4*(strength));
+    volatile uint32_t *reg_pad = (volatile uint32_t *)(port + (GPIOODR) + 4*(pad));
+    volatile uint32_t *reg_den = (volatile uint32_t *)(port + (GPIODEN));
 
     reg_strength = port_index < 4? reg_strength + BusSelection[port_index]*0x15000 : reg_strength + BusSelection[port_index]*0xE000;
     uint32_t data_strength = *reg_strength;
@@ -153,7 +153,7 @@ uint8_t GPIORead(GPIO_PORT port, uint8_t pins){
     uint8_t port_index = (((port >> 12) & 0xFF) - 4);
     if(port_index >= 32) port_index = port_index - 28;
 
-    volatile uint32_t *reg_data = port + (GPIODATA) ;
+    volatile uint32_t *reg_data = (volatile uint32_t *)(port + (GPIODATA)) ;
     reg_data = port_index < 4? reg_data + BusSelection[port_index]*0x15000 : reg_data + BusSelection[port_index]*0xE000;
     reg_data += ((uint32_t)pins); //Shifting by 2 is done automatically because it is pointer to 32bits
     return *reg_data;
@@ -163,7 +163,7 @@ void GPIOWrite(GPIO_PORT port, uint8_t pins, uint8_t data){
     uint8_t port_index = (((port >> 12) & 0xFF) - 4);
     if(port_index >= 32) port_index = port_index - 28;
 
-    volatile uint32_t *reg_data = port + (GPIODATA) ;
+    volatile uint32_t *reg_data = (volatile uint32_t *)(port + (GPIODATA)) ;
     reg_data = port_index < 4? reg_data + BusSelection[port_index]*0x15000 : reg_data + BusSelection[port_index]*0xE000;
     reg_data += ((uint32_t)pins); //Shifting by 2 is done automatically because it is pointer to 32bits
     *reg_data = (pins & data);
@@ -176,11 +176,11 @@ void GPIO_ConfigInterrupt(GPIO_PORT port, uint8_t pins, GPIO_SENSE sense, GPIO_S
     if(port_index != 5) NVIC_Enable(port_index);
     else NVIC_Enable(PORTF_INT_ID);
 
-    volatile uint32_t *reg_im = port + GPIOIM;
-    volatile uint32_t *reg_is = port + GPIOIS;
-    volatile uint32_t *reg_ibe = port + GPIOIBE;
-    volatile uint32_t *reg_iev = port + GPIOIEV;
-    volatile uint32_t *reg_icr = port + GPIOICR;
+    volatile uint32_t *reg_im = (volatile uint32_t *)(port + GPIOIM);
+    volatile uint32_t *reg_is = (volatile uint32_t *)(port + GPIOIS);
+    volatile uint32_t *reg_ibe = (volatile uint32_t *)(port + GPIOIBE);
+    volatile uint32_t *reg_iev = (volatile uint32_t *)(port + GPIOIEV);
+    volatile uint32_t *reg_icr = (volatile uint32_t *)(port + GPIOICR);
 
     uint32_t data_im = 0;
     uint32_t data_is = 0;
@@ -229,7 +229,7 @@ void GPIO_ConfigInterrupt(GPIO_PORT port, uint8_t pins, GPIO_SENSE sense, GPIO_S
     data_icr |= pins;
     *reg_icr = data_icr;
 
-    reg_im = port + GPIOIM;
+    reg_im = (volatile uint32_t *)(port + GPIOIM);
     reg_im = port_index < 4? reg_im + BusSelection[port_index]*0x15000 : reg_im + BusSelection[port_index]*0xE000;
     data_im = *reg_im;
     data_im |= pins;
@@ -260,9 +260,9 @@ void GPIO_SetIntHandler(GPIO_PORT port, uint8_t pin, void (*function) (void)){
 
 void GPIOF_ISR(void){
 
-    volatile uint32_t *reg_iev = PORTF + GPIOIEV;
-    volatile uint32_t *reg_icr = PORTF + GPIOICR;
-    volatile uint32_t *reg_mis = PORTF + GPIOMIS; //USE MIS NOT RIS (interference happens from your finger charge)
+    volatile uint32_t *reg_iev = (volatile uint32_t *)(PORTF + GPIOIEV);
+    volatile uint32_t *reg_icr = (volatile uint32_t *)(PORTF + GPIOICR);
+    volatile uint32_t *reg_mis = (volatile uint32_t *)(PORTF + GPIOMIS); //USE MIS NOT RIS (interference happens from your finger charge)
     volatile int temp = 0;
     uint8_t i = 1;
     uint16_t count = 0;
@@ -305,9 +305,9 @@ void GPIOF_ISR(void){
 
 void GPIOE_ISR(void){
 
-    volatile uint32_t *reg_iev = PORTE + GPIOIEV;
-    volatile uint32_t *reg_icr = PORTE + GPIOICR;
-    volatile uint32_t *reg_mis = PORTE + GPIOMIS; //USE MIS NOT RIS (interference happens from your finger charge)
+    volatile uint32_t *reg_iev = (volatile uint32_t *)(PORTE + GPIOIEV);
+    volatile uint32_t *reg_icr = (volatile uint32_t *)(PORTE + GPIOICR);
+    volatile uint32_t *reg_mis = (volatile uint32_t *)(PORTE + GPIOMIS); //USE MIS NOT RIS (interference happens from your finger charge)
     uint16_t temp = 0;
     uint8_t i = 1;
     uint16_t count = 0;

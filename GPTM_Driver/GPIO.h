@@ -27,7 +27,7 @@ typedef enum{
 #define PIN7 (1<<7)
 
 typedef enum{
-    MODE_IN, MODE_OUT, MODE_AF
+    MODE_IN, MODE_OUT, MODE_AF_INPUT, MODE_AF_OUTPUT
 }GPIO_MODE;
 
 typedef enum{
@@ -75,6 +75,9 @@ uint8_t GPIOClockGet(GPIO_PORT port);
 void GPIO_PadSet(GPIO_PORT port, uint8_t pins, GPIO_CURRENT strength, GPIO_PAD pad);
 uint8_t GPIORead(GPIO_PORT port, uint8_t pins);
 void GPIOWrite(GPIO_PORT port, uint8_t pins, uint8_t data);
+
+void GPIO_EnableAnalogFunction(GPIO_PORT port, uint8_t pins);
+void GPIO_ConfigPCTLMux(GPIO_PORT port, uint8_t pin, uint8_t pctl);
 
 void GPIO_ConfigInterrupt(GPIO_PORT port, uint8_t pins, GPIO_SENSE sense, GPIO_SPECS specs);
 void GPIO_SetIntHandler(GPIO_PORT port, uint8_t pin, void (*function) (void));

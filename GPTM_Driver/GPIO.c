@@ -59,13 +59,14 @@ void GPIODirectionModeSet(GPIO_PORT port, uint8_t pins, GPIO_MODE mode){
     data_dir &= ~(pins);
 
     switch(mode){
-    case MODE_AF:
-        data_afsel |= (0xFF & pins);
-        break;
-    case MODE_OUT:
-        data_dir |= (0xFF & pins);
-        break;
+    case MODE_AF_INPUT:
+        data_afsel |= (pins);
     case MODE_IN:
+        break;
+    case MODE_AF_OUTPUT:
+        data_afsel |= (pins);
+    case MODE_OUT:
+        data_dir |= (pins);
         break;
     }
 
@@ -79,9 +80,7 @@ uint8_t GPIODirectionGet(GPIO_PORT port, uint8_t pins){
 
     volatile uint32_t *reg_dir = (volatile uint32_t *)(port + GPIODIR);
     reg_dir = port_index < 4? reg_dir + BusSelection[port_index]*0x15000 : reg_dir + BusSelection[port_index]*0xE000;
-    uint32_t data_dir = *reg_dir;
-    data_dir = (uint8_t)(data_dir & (pins));
-    return data_dir;
+    return (uint8_t)(*reg_dir & (pins));
 }
 
 uint8_t GPIOModeGet(GPIO_PORT port, uint8_t pins){
@@ -90,9 +89,7 @@ uint8_t GPIOModeGet(GPIO_PORT port, uint8_t pins){
 
     volatile uint32_t *reg_afsel = (volatile uint32_t *)(port + GPIOAFSEL);
     reg_afsel = port_index < 4? reg_afsel + BusSelection[port_index]*0x15000 : reg_afsel + BusSelection[port_index]*0xE000;
-    uint32_t data_afsel = *reg_afsel;
-    data_afsel = (uint8_t)(data_afsel & (pins));
-    return data_afsel;
+    return (uint8_t)(*reg_afsel & (pins));
 }
 
 void GPIOClockSet(GPIO_PORT port){
@@ -128,25 +125,16 @@ void GPIO_PadSet(GPIO_PORT port, uint8_t pins, GPIO_CURRENT strength, GPIO_PAD p
     volatile uint32_t *reg_den = (volatile uint32_t *)(port + (GPIODEN));
 
     reg_strength = port_index < 4? reg_strength + BusSelection[port_index]*0x15000 : reg_strength + BusSelection[port_index]*0xE000;
-    uint32_t data_strength = *reg_strength;
-    data_strength &= ~(pins);
-    data_strength |= (0xFF & pins);
-    *reg_strength = data_strength;
+    *reg_strength = *reg_strength | (pins);
 
     if(pad != PAD_NPU_NPD){
         reg_pad = port_index < 4? reg_pad + BusSelection[port_index]*0x15000 : reg_pad + BusSelection[port_index]*0xE000;
-        uint32_t data_pad = *reg_pad;
-        data_pad &= ~(pins);
-        data_pad |= (0xFF & pins);
-        *reg_pad = data_pad;
+        *reg_pad = *reg_pad | (pins);
     }
 
-
+    //If AMSEL is set !!!
     reg_den = port_index < 4? reg_den + BusSelection[port_index]*0x15000 : reg_den + BusSelection[port_index]*0xE000;
-    uint32_t data_den = *reg_den;
-    data_den &= ~(pins);
-    data_den |= (0xFF & pins);
-    *reg_den = data_den;
+    *reg_den = *reg_den | (pins);
 }
 
 uint8_t GPIORead(GPIO_PORT port, uint8_t pins){
@@ -167,6 +155,31 @@ void GPIOWrite(GPIO_PORT port, uint8_t pins, uint8_t data){
     reg_data = port_index < 4? reg_data + BusSelection[port_index]*0x15000 : reg_data + BusSelection[port_index]*0xE000;
     reg_data += ((uint32_t)pins); //Shifting by 2 is done automatically because it is pointer to 32bits
     *reg_data = (pins & data);
+}
+
+void GPIO_EnableAnalogFunction(GPIO_PORT port, uint8_t pins){
+    uint8_t port_index = (((port >> 12) & 0xFF) - 4);
+    if(port_index >= 32) port_index = port_index - 28;
+
+    volatile uint32_t *reg_amsel = (volatile uint32_t *)(port + (GPIOAMSEL));
+    reg_amsel = port_index < 4? reg_amsel + BusSelection[port_index]*0x15000 : reg_amsel + BusSelection[port_index]*0xE000;
+    *reg_amsel = *reg_amsel | (pins);
+}
+
+void GPIO_ConfigPCTLMux(GPIO_PORT port, uint8_t pin, uint8_t pctl){
+    uint8_t port_index = (((port >> 12) & 0xFF) - 4);
+    if(port_index >= 32) port_index = port_index - 28;
+
+    volatile uint32_t *reg_pctl = (volatile uint32_t *)(port + (GPIOPCTL));
+    reg_pctl = port_index < 4? reg_pctl + BusSelection[port_index]*0x15000 : reg_pctl + BusSelection[port_index]*0xE000;
+    uint8_t position = 0;
+    while(pin != 1){
+        pin = pin>>1;
+        position += 1;
+        if(position > 7) return;
+    }
+    *reg_pctl = *reg_pctl & (~(0x0F<<(position*4)));
+    *reg_pctl = *reg_pctl | (pctl<<(position*4));
 }
 
 void GPIO_ConfigInterrupt(GPIO_PORT port, uint8_t pins, GPIO_SENSE sense, GPIO_SPECS specs){

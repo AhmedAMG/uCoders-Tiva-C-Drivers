@@ -8,6 +8,8 @@
 #ifndef GPTM_H_
 #define GPTM_H_
 
+#define SYSCLK 16000000
+
 typedef enum{
     TIM0_AB = 0x40030000, TIM0_A = 0x40030001, TIM0_B = 0x40030002,
     TIM1_AB = 0x40031000, TIM1_A = 0x40031001, TIM1_B = 0x40031002,
@@ -45,11 +47,11 @@ typedef enum{
 }GPTM_STALL;
 
 typedef enum{
-    INT_TIMEOUT = 0,
-    INT_CAPTURE_MATCH = 1,
-    INT_CAPTURE_EVENT = 2,
-    INT_RTC = 3,
-    INT_NON_CAPTURE_MATCH = 4
+    INT_TIMEOUT = 0, //For all modes
+    INT_CAPTURE_MATCH = 1, //For edge count
+    INT_CAPTURE_EVENT = 2, //For edge-time(input) and pwm(output) (9 in TIMER_MR)
+    INT_RTC = 3, //For Real time clock
+    INT_NON_CAPTURE_MATCH = 4 //For one shot and periodic (5 in TIMER_MR)
 }GPTM_INT;
 
 typedef enum{
@@ -67,15 +69,35 @@ typedef enum{
     EDGE_BOTH = 3
 }GPTM_EDGE;
 
+typedef enum{
+    EDGECOUNT_ONETIME = 0,
+    EDGECOUNT_CONTINUOUS = 1
+}GPTM_CONTINUITY;
+
+typedef enum{
+    CCP_NONINVERTED = 0,
+    CCP_INVERTED = 1
+}GPTM_CCP;
+
+//Classy Functions :)
+//You can use them for almost full control on the 32bit timers without the following section of functions
+uint8_t FANCYTIMER_ONESHOT_SetTimeoutSeconds(GPTM_MODULE module, uint32_t msec, void (*function) (void));
+uint8_t FANCYTIMER_ONESHOT_SetMatchSeconds(GPTM_MODULE module, uint32_t msec, void (*function) (void));
+uint8_t FANCYTIMER_PERIODIC_SetTimeoutSeconds(GPTM_MODULE module, uint32_t msec, void (*function) (void));
+uint8_t FANCYTIMER_PERIODIC_SetMatchSeconds(GPTM_MODULE module, uint32_t msec, void (*function) (void));
+uint8_t FANCYTIMER_ECOUNT_SetEventsNumber(GPTM_MODULE module, uint32_t events, GPTM_EDGE edge, GPTM_CONTINUITY continuity, void (*function) (void));
+uint8_t FANCYTIMER_ETIME_SetMaximumPeriodicity(GPTM_MODULE module, GPTM_EDGE edge, void (*function) (void));
+uint8_t FANCYTIMER_PWM_SetDutyCycle(GPTM_MODULE module, float freq_KHz, uint8_t duty, GPTM_CCP ccp, void (*function) (void));
+
+void TIMER_Start(GPTM_MODULE module);
+void TIMER_Stop(GPTM_MODULE module);
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Initialize the timer module with the specified mode, direction of counting and debugging stalling feature
 void TIMER_Init(GPTM_MODULE module, GPTM_MODE mode, GPTM_DIRECTION direction, GPTM_STALL stall);
 
 //Enable the interrupt source from the 5 options and set ISR pointer
 void TIMER_EnableAndSetIntISR(GPTM_MODULE module, GPTM_INT interrupt_ID, void (*function) (void));
-
-//Set the require time for the timeout and match timer events
-void TIMER_SetTimeoutSeconds(uint32_t sec);
-void TIMER_SetMatchEventsNumber(uint32_t event);
 
 //Enable and Disable WOT bit
 void TIMER_EnableWaitForTrigger(GPTM_MODULE module);
@@ -84,12 +106,9 @@ void TIMER_DisableWaitForTrigger(GPTM_MODULE module);
 //Edge Detection Type
 void TIMER_ConfigEdgeDetection(GPTM_MODULE module, GPTM_EDGE edge);
 
-//Start the timer and begin counting
-void TIMER_Start(GPTM_MODULE module);
+//CCP Configuration : Inverted or not
+void TIMER_ConfigCCP(GPTM_MODULE module, GPTM_CCP ccp);
 
-//Stop the timer
-void TIMER_Stop(GPTM_MODULE module);
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Enable or Disable the snapshot feature
 void TIMER_EnableSnapshot(GPTM_MODULE module);
 void TIMER_DisableSnapshot(GPTM_MODULE module);
@@ -108,12 +127,11 @@ void TIMER_SetPrescalerMatch(GPTM_MODULE module, uint16_t value);
 //It will return the snapshot of the timer and optionally Prescaler snapshot if it is used
 uint32_t TIMER_GetSnapshot(GPTM_MODULE module);
 
-//Configure the CCP pins for the timer
-
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void TIMER0A_ISR(void);
 void TIMER0B_ISR(void);
+void TIMER2A_ISR(void);
+void TIMER2B_ISR(void);
 void TIMER5A_ISR(void);
 void TIMER5B_ISR(void);
 

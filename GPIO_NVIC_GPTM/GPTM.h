@@ -86,7 +86,7 @@ uint8_t FANCYTIMER_ONESHOT_SetMatchSeconds(GPTM_MODULE module, uint32_t msec, vo
 uint8_t FANCYTIMER_PERIODIC_SetTimeoutSeconds(GPTM_MODULE module, uint32_t msec, void (*function) (void));
 uint8_t FANCYTIMER_PERIODIC_SetMatchSeconds(GPTM_MODULE module, uint32_t msec, void (*function) (void));
 uint8_t FANCYTIMER_ECOUNT_SetEventsNumber(GPTM_MODULE module, uint32_t events, GPTM_EDGE edge, GPTM_CONTINUITY continuity, void (*function) (void));
-uint8_t FANCYTIMER_ETIME_SetMaximumPeriodicity(GPTM_MODULE module, GPTM_EDGE edge, void (*function) (void));
+uint8_t FANCYTIMER_ETIME_Configure(GPTM_MODULE module, GPTM_EDGE edge, void (*function) (void));
 uint8_t FANCYTIMER_PWM_SetDutyCycle(GPTM_MODULE module, float freq_KHz, uint8_t duty, GPTM_CCP ccp, void (*function) (void));
 
 void TIMER_Start(GPTM_MODULE module);

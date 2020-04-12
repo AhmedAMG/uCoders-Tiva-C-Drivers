@@ -43,7 +43,7 @@ int main(void)
     //FANCYTIMER_PERIODIC_SetTimeoutSeconds(TIM2_AB,1000,TIMER_Handler);
     //FANCYTIMER_PERIODIC_SetMatchSeconds(TIM2_AB,500,TIMER_Handler);
     //FANCYTIMER_ECOUNT_SetEventsNumber(TIM2_A, 5, EDGE_FALLING, EDGECOUNT_CONTINUOUS, TIMER_Handler);
-    FANCYTIMER_ETIME_SetMaximumPeriodicity(TIM2_A, EDGE_FALLING, TIMER2_Handler);
+    FANCYTIMER_ETIME_Configure(TIM2_A, EDGE_FALLING, TIMER2_Handler);
     FANCYTIMER_PWM_SetDutyCycle(TIM0_B, 1, 50, CCP_INVERTED, TIMER0_Handler);
     NVIC_SetPriority(23, 3);
     NVIC_SetPriority(20, 5);

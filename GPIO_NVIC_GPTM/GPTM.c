@@ -250,7 +250,7 @@ uint8_t FANCYTIMER_ECOUNT_SetEventsNumber(GPTM_MODULE module, uint32_t events, G
     return 1;
 }
 
-uint8_t FANCYTIMER_ETIME_SetMaximumPeriodicity(GPTM_MODULE module, GPTM_EDGE edge, void (*function) (void)){
+uint8_t FANCYTIMER_ETIME_Configure(GPTM_MODULE module, GPTM_EDGE edge, void (*function) (void)){
     if((module & 0x03) == 0){return 0;}
 
     TIMER_Init(module, TIMER_MODE_INPUT_EDGE_TIME, COUNT_UP, STALL_ENABLE);

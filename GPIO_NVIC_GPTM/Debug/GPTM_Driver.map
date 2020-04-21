@@ -1,17 +1,17 @@
 ******************************************************************************
                   TI ARM Linker PC v18.12.4                    
 ******************************************************************************
->> Linked Sun Apr 12 09:55:45 2020
+>> Linked Tue Apr 21 21:10:16 2020
 
 OUTPUT FILE NAME:   <GPTM_Driver.out>
-ENTRY POINT SYMBOL: "_c_int00_noargs"  address: 00002625
+ENTRY POINT SYMBOL: "_c_int00_noargs"  address: 00002489
 
 
 MEMORY CONFIGURATION
 
          name            origin    length      used     unused   attr    fill
 ----------------------  --------  ---------  --------  --------  ----  --------
-  FLASH                 00000000   00040000  0000271e  0003d8e2  R  X
+  FLASH                 00000000   00040000  00002582  0003da7e  R  X
   SRAM                  20000000   00008000  0000052f  00007ad1  RW X
 
 
@@ -19,10 +19,10 @@ SEGMENT ALLOCATION MAP
 
 run origin  load origin   length   init length attrs members
 ----------  ----------- ---------- ----------- ----- -------
-00000000    00000000    00002720   00002720    r-x
+00000000    00000000    00002588   00002588    r-x
   00000000    00000000    0000026c   0000026c    r-- .intvecs
-  0000026c    0000026c    0000244a   0000244a    r-x .text
-  000026b8    000026b8    00000068   00000068    r-- .cinit
+  0000026c    0000026c    000022ae   000022ae    r-x .text
+  00002520    00002520    00000068   00000068    r-- .cinit
 20000000    20000000    00000530   00000000    rw-
   20000000    20000000    00000200   00000000    rw- .stack
   20000200    20000200    000001ff   00000000    rw- .data
@@ -37,32 +37,32 @@ section   page    origin      length       input sections
 .intvecs   0    00000000    0000026c     
                   00000000    0000026c     tm4c123gh6pm_startup_ccs.obj (.intvecs)
 
-.text      0    0000026c    0000244a     
-                  0000026c    00000f44     GPTM.obj (.text)
-                  000011b0    00000c78     GPIO.obj (.text)
-                  00001e28    000002ac     NVIC.obj (.text)
-                  000020d4    00000190     main.obj (.text)
-                  00002264    00000136     rtsv7M4_T_le_v4SPD16_eabi.lib : fd_div_t2.asm.obj (.text)
-                  0000239a    000000fc                                   : fd_mul_t2.asm.obj (.text)
-                  00002496    0000009c                                   : memcpy_t2.asm.obj (.text)
-                  00002532    00000068                                   : copy_decompress_lzss.c.obj (.text:decompress:lzss:__TI_decompress_lzss)
-                  0000259a    00000002     --HOLE-- [fill = 0]
-                  0000259c    00000044                                   : autoinit.c.obj (.text:__TI_auto_init_nobinit_nopinit:__TI_auto_init_nobinit_nopinit)
-                  000025e0    00000044                                   : fd_tou_t2.asm.obj (.text)
-                  00002624    00000034                                   : boot_cortex_m.c.obj (.text:_c_int00_noargs:_c_int00_noargs)
-                  00002658    00000020                                   : u_tofd_t2.asm.obj (.text)
-                  00002678    0000001c                                   : copy_zero_init.c.obj (.text:decompress:ZI:__TI_zero_init_nomemset:__TI_zero_init_nomemset)
-                  00002694    0000000e                                   : copy_decompress_none.c.obj (.text:decompress:none:__TI_decompress_none)
-                  000026a2    0000000c     tm4c123gh6pm_startup_ccs.obj (.text)
-                  000026ae    00000004     rtsv7M4_T_le_v4SPD16_eabi.lib : pre_init.c.obj (.text:_system_pre_init)
-                  000026b2    00000004                                   : exit.c.obj (.text:abort:abort)
+.text      0    0000026c    000022ae     
+                  0000026c    00000da0     GPTM.obj (.text)
+                  0000100c    00000c78     GPIO.obj (.text)
+                  00001c84    000002ac     NVIC.obj (.text)
+                  00001f30    00000198     main.obj (.text)
+                  000020c8    00000136     rtsv7M4_T_le_v4SPD16_eabi.lib : fd_div_t2.asm.obj (.text)
+                  000021fe    000000fc                                   : fd_mul_t2.asm.obj (.text)
+                  000022fa    0000009c                                   : memcpy_t2.asm.obj (.text)
+                  00002396    00000068                                   : copy_decompress_lzss.c.obj (.text:decompress:lzss:__TI_decompress_lzss)
+                  000023fe    00000002     --HOLE-- [fill = 0]
+                  00002400    00000044                                   : autoinit.c.obj (.text:__TI_auto_init_nobinit_nopinit:__TI_auto_init_nobinit_nopinit)
+                  00002444    00000044                                   : fd_tou_t2.asm.obj (.text)
+                  00002488    00000034                                   : boot_cortex_m.c.obj (.text:_c_int00_noargs:_c_int00_noargs)
+                  000024bc    00000020                                   : u_tofd_t2.asm.obj (.text)
+                  000024dc    0000001c                                   : copy_zero_init.c.obj (.text:decompress:ZI:__TI_zero_init_nomemset:__TI_zero_init_nomemset)
+                  000024f8    0000000e                                   : copy_decompress_none.c.obj (.text:decompress:none:__TI_decompress_none)
+                  00002506    0000000c     tm4c123gh6pm_startup_ccs.obj (.text)
+                  00002512    00000004     rtsv7M4_T_le_v4SPD16_eabi.lib : pre_init.c.obj (.text:_system_pre_init)
+                  00002516    00000004                                   : exit.c.obj (.text:abort:abort)
 
-.cinit     0    000026b8    00000068     
-                  000026b8    00000043     (.cinit..data.load) [load image, compression = lzss]
-                  000026fb    00000001     --HOLE-- [fill = 0]
-                  000026fc    0000000c     (__TI_handler_table)
-                  00002708    00000008     (.cinit..bss.load) [load image, compression = zero_init]
-                  00002710    00000010     (__TI_cinit_table)
+.cinit     0    00002520    00000068     
+                  00002520    00000043     (.cinit..data.load) [load image, compression = lzss]
+                  00002563    00000001     --HOLE-- [fill = 0]
+                  00002564    0000000c     (__TI_handler_table)
+                  00002570    00000008     (.cinit..bss.load) [load image, compression = zero_init]
+                  00002578    00000010     (__TI_cinit_table)
 
 .init_array 
 *          0    00000000    00000000     UNINITIALIZED
@@ -98,13 +98,13 @@ MODULE SUMMARY
        Module                         code   ro data   rw data
        ------                         ----   -------   -------
     .\
-       GPTM.obj                       3908   0         744    
+       GPTM.obj                       3488   0         744    
        GPIO.obj                       3192   0         70     
        NVIC.obj                       684    0         0      
        tm4c123gh6pm_startup_ccs.obj   12     620       0      
-       main.obj                       400    0         1      
+       main.obj                       408    0         1      
     +--+------------------------------+------+---------+---------+
-       Total:                         8196   620       815    
+       Total:                         7784   620       815    
                                                               
     C:\ti\ccs920\ccs\tools\compiler\ti-cgt-arm_18.12.4.LTS\lib\rtsv7M4_T_le_v4SPD16_eabi.lib
        fd_div_t2.asm.obj              310    0         0      
@@ -125,19 +125,19 @@ MODULE SUMMARY
        Stack:                         0      0         512    
        Linker Generated:              0      103       0      
     +--+------------------------------+------+---------+---------+
-       Grand Total:                   9288   723       1327   
+       Grand Total:                   8876   723       1327   
 
 
 LINKER GENERATED COPY TABLES
 
-__TI_cinit_table @ 00002710 records: 2, size/record: 8, table size: 16
-	.data: load addr=000026b8, load size=00000043 bytes, run addr=20000200, run size=000001ff bytes, compression=lzss
-	.bss: load addr=00002708, load size=00000008 bytes, run addr=20000400, run size=00000130 bytes, compression=zero_init
+__TI_cinit_table @ 00002578 records: 2, size/record: 8, table size: 16
+	.data: load addr=00002520, load size=00000043 bytes, run addr=20000200, run size=000001ff bytes, compression=lzss
+	.bss: load addr=00002570, load size=00000008 bytes, run addr=20000400, run size=00000130 bytes, compression=zero_init
 
 
 LINKER GENERATED HANDLER TABLE
 
-__TI_handler_table @ 000026fc records: 3, size/record: 4, table size: 12
+__TI_handler_table @ 00002564 records: 3, size/record: 4, table size: 12
 	index: 0, handler: __TI_decompress_lzss
 	index: 1, handler: __TI_decompress_none
 	index: 2, handler: __TI_zero_init
@@ -145,203 +145,203 @@ __TI_handler_table @ 000026fc records: 3, size/record: 4, table size: 12
 
 GLOBAL SYMBOLS: SORTED ALPHABETICALLY BY Name 
 
-address   name                                  
--------   ----                                  
-000026b3  C$$EXIT                               
-000007c5  FANCYTIMER_ECOUNT_SetEventsNumber     
-00000887  FANCYTIMER_ETIME_SetMaximumPeriodicity
-00000655  FANCYTIMER_ONESHOT_SetMatchSeconds    
-000005dd  FANCYTIMER_ONESHOT_SetTimeoutSeconds  
-00000745  FANCYTIMER_PERIODIC_SetMatchSeconds   
-000006cd  FANCYTIMER_PERIODIC_SetTimeoutSeconds 
-000008e1  FANCYTIMER_PWM_SetDutyCycle           
-00001221  GPIOBusGet                            
-000011b1  GPIOBusSet                            
-000014a7  GPIOClockGet                          
-0000146f  GPIOClockReset                        
-00001437  GPIOClockSet                          
-00001357  GPIODirectionGet                      
-00001251  GPIODirectionModeSet                  
-00001cb5  GPIOE_ISR                             
-00001b7d  GPIOF_ISR                             
-000013c7  GPIOModeGet                           
-00001611  GPIORead                              
-00001685  GPIOWrite                             
-00001849  GPIO_ConfigInterrupt                  
-0000177d  GPIO_ConfigPCTLMux                    
-00001705  GPIO_EnableAnalogFunction             
-000014ed  GPIO_PadSet                           
-00001b0b  GPIO_SetIntHandler                    
-00001f15  NVIC_ClearPending                     
-00001e79  NVIC_Disable                          
-00001e2b  NVIC_Enable                           
-00001fb3  NVIC_GetActiveState                   
-00001f63  NVIC_GetPending                       
-00002061  NVIC_GetPriority                      
-00001e29  NVIC_SetISR                           
-00001ec7  NVIC_SetPending                       
-00002003  NVIC_SetPriority                      
-000026a3  ResetISR                              
-00000f2f  TIMER0A_ISR                           
-00000f8f  TIMER0B_ISR                           
-0000218b  TIMER0_Handler                        
-00000ff5  TIMER2A_ISR                           
-00001055  TIMER2B_ISR                           
-00002153  TIMER2_Handler                        
-000010bb  TIMER5A_ISR                           
-0000111b  TIMER5B_ISR                           
-00000b01  TIMER_ConfigCCP                       
-00000a7f  TIMER_ConfigEdgeDetection             
-0000050d  TIMER_DisableInterrupt                
-00000cc3  TIMER_DisableSnapshot                 
-00000a1f  TIMER_DisableWaitForTrigger           
-000003d9  TIMER_EnableAndSetIntISR              
-00000c63  TIMER_EnableSnapshot                  
-000009bf  TIMER_EnableWaitForTrigger            
-00000eab  TIMER_GetSnapshot                     
-0000026d  TIMER_Init                            
-00000d23  TIMER_SetIntervalLoad                 
-00000def  TIMER_SetMatch                        
-00000d7f  TIMER_SetPrescalar                    
-00000e4b  TIMER_SetPrescalerMatch               
-00000ddf  TIMER_SetUpdateTime                   
-00000b83  TIMER_Start                           
-00000bf9  TIMER_Stop                            
-20000200  __STACK_END                           
-00000200  __STACK_SIZE                          
-20000200  __STACK_TOP                           
-00002710  __TI_CINIT_Base                       
-00002720  __TI_CINIT_Limit                      
-000026fc  __TI_Handler_Table_Base               
-00002708  __TI_Handler_Table_Limit              
-0000259d  __TI_auto_init_nobinit_nopinit        
-00002533  __TI_decompress_lzss                  
-00002695  __TI_decompress_none                  
-ffffffff  __TI_pprof_out_hndl                   
-ffffffff  __TI_prof_data_size                   
-ffffffff  __TI_prof_data_start                  
-00000000  __TI_static_base__                    
-00002679  __TI_zero_init_nomemset               
-000025e1  __aeabi_d2uiz                         
-00002265  __aeabi_ddiv                          
-0000239b  __aeabi_dmul                          
-00002497  __aeabi_memcpy                        
-00002497  __aeabi_memcpy4                       
-00002497  __aeabi_memcpy8                       
-00002659  __aeabi_ui2d                          
-ffffffff  __binit__                             
-ffffffff  __c_args__                            
-UNDEFED   __mpu_init                            
-20000000  __stack                               
-00002625  _c_int00_noargs                       
-UNDEFED   _system_post_cinit                    
-000026af  _system_pre_init                      
-000026b3  abort                                 
-ffffffff  binit                                 
-00000000  g_pfnVectors                          
-000020d5  main                                  
-00002497  memcpy                                
-200003fe  state                                 
+address   name                                 
+-------   ----                                 
+00002517  C$$EXIT                              
+00000799  FANCYTIMER_ECOUNT_SetEventsNumber    
+0000089d  FANCYTIMER_ETIME_Configure           
+000005f3  FANCYTIMER_ONESHOT_SetMatchSeconds   
+00000569  FANCYTIMER_ONESHOT_SetTimeoutSeconds 
+00000707  FANCYTIMER_PERIODIC_SetMatchSeconds  
+0000067d  FANCYTIMER_PERIODIC_SetTimeoutSeconds
+00000913  FANCYTIMER_PWM_SetDutyCycle          
+0000107d  GPIOBusGet                           
+0000100d  GPIOBusSet                           
+00001303  GPIOClockGet                         
+000012cb  GPIOClockReset                       
+00001293  GPIOClockSet                         
+000011b3  GPIODirectionGet                     
+000010ad  GPIODirectionModeSet                 
+00001b11  GPIOE_ISR                            
+000019d9  GPIOF_ISR                            
+00001223  GPIOModeGet                          
+0000146d  GPIORead                             
+000014e1  GPIOWrite                            
+000016a5  GPIO_ConfigInterrupt                 
+000015d9  GPIO_ConfigPCTLMux                   
+00001561  GPIO_EnableAnalogFunction            
+00001349  GPIO_PadSet                          
+00001967  GPIO_SetIntHandler                   
+00001d71  NVIC_ClearPending                    
+00001cd5  NVIC_Disable                         
+00001c87  NVIC_Enable                          
+00001e0f  NVIC_GetActiveState                  
+00001dbf  NVIC_GetPending                      
+00001ebd  NVIC_GetPriority                     
+00001c85  NVIC_SetISR                          
+00001d23  NVIC_SetPending                      
+00001e5f  NVIC_SetPriority                     
+00002507  ResetISR                             
+00000d89  TIMER0A_ISR                          
+00000de9  TIMER0B_ISR                          
+00001ff1  TIMER0_Handler                       
+00000e4f  TIMER2A_ISR                          
+00000eaf  TIMER2B_ISR                          
+00001fb9  TIMER2_Handler                       
+00000f15  TIMER5A_ISR                          
+00000f75  TIMER5B_ISR                          
+00000ae5  TIMER_ConfigCCP                      
+00000a89  TIMER_ConfigEdgeDetection            
+000004bb  TIMER_DisableInterrupt               
+00000bf3  TIMER_DisableSnapshot                
+00000a4f  TIMER_DisableWaitForTrigger          
+000003b3  TIMER_EnableAndSetIntISR             
+00000bb9  TIMER_EnableSnapshot                 
+00000a15  TIMER_EnableWaitForTrigger           
+00000d2b  TIMER_GetSnapshot                    
+0000026d  TIMER_Init                           
+00000c2d  TIMER_SetIntervalLoad                
+00000cb3  TIMER_SetMatch                       
+00000c69  TIMER_SetPrescalar                   
+00000cf1  TIMER_SetPrescalerMatch              
+00000ca3  TIMER_SetUpdateTime                  
+00000b41  TIMER_Start                          
+00000b7d  TIMER_Stop                           
+20000200  __STACK_END                          
+00000200  __STACK_SIZE                         
+20000200  __STACK_TOP                          
+00002578  __TI_CINIT_Base                      
+00002588  __TI_CINIT_Limit                     
+00002564  __TI_Handler_Table_Base              
+00002570  __TI_Handler_Table_Limit             
+00002401  __TI_auto_init_nobinit_nopinit       
+00002397  __TI_decompress_lzss                 
+000024f9  __TI_decompress_none                 
+ffffffff  __TI_pprof_out_hndl                  
+ffffffff  __TI_prof_data_size                  
+ffffffff  __TI_prof_data_start                 
+00000000  __TI_static_base__                   
+000024dd  __TI_zero_init_nomemset              
+00002445  __aeabi_d2uiz                        
+000020c9  __aeabi_ddiv                         
+000021ff  __aeabi_dmul                         
+000022fb  __aeabi_memcpy                       
+000022fb  __aeabi_memcpy4                      
+000022fb  __aeabi_memcpy8                      
+000024bd  __aeabi_ui2d                         
+ffffffff  __binit__                            
+ffffffff  __c_args__                           
+UNDEFED   __mpu_init                           
+20000000  __stack                              
+00002489  _c_int00_noargs                      
+UNDEFED   _system_post_cinit                   
+00002513  _system_pre_init                     
+00002517  abort                                
+ffffffff  binit                                
+00000000  g_pfnVectors                         
+00001f31  main                                 
+000022fb  memcpy                               
+200003fe  state                                
 
 
 GLOBAL SYMBOLS: SORTED BY Symbol Address 
 
-address   name                                  
--------   ----                                  
-00000000  __TI_static_base__                    
-00000000  g_pfnVectors                          
-00000200  __STACK_SIZE                          
-0000026d  TIMER_Init                            
-000003d9  TIMER_EnableAndSetIntISR              
-0000050d  TIMER_DisableInterrupt                
-000005dd  FANCYTIMER_ONESHOT_SetTimeoutSeconds  
-00000655  FANCYTIMER_ONESHOT_SetMatchSeconds    
-000006cd  FANCYTIMER_PERIODIC_SetTimeoutSeconds 
-00000745  FANCYTIMER_PERIODIC_SetMatchSeconds   
-000007c5  FANCYTIMER_ECOUNT_SetEventsNumber     
-00000887  FANCYTIMER_ETIME_SetMaximumPeriodicity
-000008e1  FANCYTIMER_PWM_SetDutyCycle           
-000009bf  TIMER_EnableWaitForTrigger            
-00000a1f  TIMER_DisableWaitForTrigger           
-00000a7f  TIMER_ConfigEdgeDetection             
-00000b01  TIMER_ConfigCCP                       
-00000b83  TIMER_Start                           
-00000bf9  TIMER_Stop                            
-00000c63  TIMER_EnableSnapshot                  
-00000cc3  TIMER_DisableSnapshot                 
-00000d23  TIMER_SetIntervalLoad                 
-00000d7f  TIMER_SetPrescalar                    
-00000ddf  TIMER_SetUpdateTime                   
-00000def  TIMER_SetMatch                        
-00000e4b  TIMER_SetPrescalerMatch               
-00000eab  TIMER_GetSnapshot                     
-00000f2f  TIMER0A_ISR                           
-00000f8f  TIMER0B_ISR                           
-00000ff5  TIMER2A_ISR                           
-00001055  TIMER2B_ISR                           
-000010bb  TIMER5A_ISR                           
-0000111b  TIMER5B_ISR                           
-000011b1  GPIOBusSet                            
-00001221  GPIOBusGet                            
-00001251  GPIODirectionModeSet                  
-00001357  GPIODirectionGet                      
-000013c7  GPIOModeGet                           
-00001437  GPIOClockSet                          
-0000146f  GPIOClockReset                        
-000014a7  GPIOClockGet                          
-000014ed  GPIO_PadSet                           
-00001611  GPIORead                              
-00001685  GPIOWrite                             
-00001705  GPIO_EnableAnalogFunction             
-0000177d  GPIO_ConfigPCTLMux                    
-00001849  GPIO_ConfigInterrupt                  
-00001b0b  GPIO_SetIntHandler                    
-00001b7d  GPIOF_ISR                             
-00001cb5  GPIOE_ISR                             
-00001e29  NVIC_SetISR                           
-00001e2b  NVIC_Enable                           
-00001e79  NVIC_Disable                          
-00001ec7  NVIC_SetPending                       
-00001f15  NVIC_ClearPending                     
-00001f63  NVIC_GetPending                       
-00001fb3  NVIC_GetActiveState                   
-00002003  NVIC_SetPriority                      
-00002061  NVIC_GetPriority                      
-000020d5  main                                  
-00002153  TIMER2_Handler                        
-0000218b  TIMER0_Handler                        
-00002265  __aeabi_ddiv                          
-0000239b  __aeabi_dmul                          
-00002497  __aeabi_memcpy                        
-00002497  __aeabi_memcpy4                       
-00002497  __aeabi_memcpy8                       
-00002497  memcpy                                
-00002533  __TI_decompress_lzss                  
-0000259d  __TI_auto_init_nobinit_nopinit        
-000025e1  __aeabi_d2uiz                         
-00002625  _c_int00_noargs                       
-00002659  __aeabi_ui2d                          
-00002679  __TI_zero_init_nomemset               
-00002695  __TI_decompress_none                  
-000026a3  ResetISR                              
-000026af  _system_pre_init                      
-000026b3  C$$EXIT                               
-000026b3  abort                                 
-000026fc  __TI_Handler_Table_Base               
-00002708  __TI_Handler_Table_Limit              
-00002710  __TI_CINIT_Base                       
-00002720  __TI_CINIT_Limit                      
-20000000  __stack                               
-20000200  __STACK_END                           
-20000200  __STACK_TOP                           
-200003fe  state                                 
-ffffffff  __TI_pprof_out_hndl                   
-ffffffff  __TI_prof_data_size                   
-ffffffff  __TI_prof_data_start                  
-ffffffff  __binit__                             
-ffffffff  __c_args__                            
-ffffffff  binit                                 
-UNDEFED   __mpu_init                            
-UNDEFED   _system_post_cinit                    
+address   name                                 
+-------   ----                                 
+00000000  __TI_static_base__                   
+00000000  g_pfnVectors                         
+00000200  __STACK_SIZE                         
+0000026d  TIMER_Init                           
+000003b3  TIMER_EnableAndSetIntISR             
+000004bb  TIMER_DisableInterrupt               
+00000569  FANCYTIMER_ONESHOT_SetTimeoutSeconds 
+000005f3  FANCYTIMER_ONESHOT_SetMatchSeconds   
+0000067d  FANCYTIMER_PERIODIC_SetTimeoutSeconds
+00000707  FANCYTIMER_PERIODIC_SetMatchSeconds  
+00000799  FANCYTIMER_ECOUNT_SetEventsNumber    
+0000089d  FANCYTIMER_ETIME_Configure           
+00000913  FANCYTIMER_PWM_SetDutyCycle          
+00000a15  TIMER_EnableWaitForTrigger           
+00000a4f  TIMER_DisableWaitForTrigger          
+00000a89  TIMER_ConfigEdgeDetection            
+00000ae5  TIMER_ConfigCCP                      
+00000b41  TIMER_Start                          
+00000b7d  TIMER_Stop                           
+00000bb9  TIMER_EnableSnapshot                 
+00000bf3  TIMER_DisableSnapshot                
+00000c2d  TIMER_SetIntervalLoad                
+00000c69  TIMER_SetPrescalar                   
+00000ca3  TIMER_SetUpdateTime                  
+00000cb3  TIMER_SetMatch                       
+00000cf1  TIMER_SetPrescalerMatch              
+00000d2b  TIMER_GetSnapshot                    
+00000d89  TIMER0A_ISR                          
+00000de9  TIMER0B_ISR                          
+00000e4f  TIMER2A_ISR                          
+00000eaf  TIMER2B_ISR                          
+00000f15  TIMER5A_ISR                          
+00000f75  TIMER5B_ISR                          
+0000100d  GPIOBusSet                           
+0000107d  GPIOBusGet                           
+000010ad  GPIODirectionModeSet                 
+000011b3  GPIODirectionGet                     
+00001223  GPIOModeGet                          
+00001293  GPIOClockSet                         
+000012cb  GPIOClockReset                       
+00001303  GPIOClockGet                         
+00001349  GPIO_PadSet                          
+0000146d  GPIORead                             
+000014e1  GPIOWrite                            
+00001561  GPIO_EnableAnalogFunction            
+000015d9  GPIO_ConfigPCTLMux                   
+000016a5  GPIO_ConfigInterrupt                 
+00001967  GPIO_SetIntHandler                   
+000019d9  GPIOF_ISR                            
+00001b11  GPIOE_ISR                            
+00001c85  NVIC_SetISR                          
+00001c87  NVIC_Enable                          
+00001cd5  NVIC_Disable                         
+00001d23  NVIC_SetPending                      
+00001d71  NVIC_ClearPending                    
+00001dbf  NVIC_GetPending                      
+00001e0f  NVIC_GetActiveState                  
+00001e5f  NVIC_SetPriority                     
+00001ebd  NVIC_GetPriority                     
+00001f31  main                                 
+00001fb9  TIMER2_Handler                       
+00001ff1  TIMER0_Handler                       
+000020c9  __aeabi_ddiv                         
+000021ff  __aeabi_dmul                         
+000022fb  __aeabi_memcpy                       
+000022fb  __aeabi_memcpy4                      
+000022fb  __aeabi_memcpy8                      
+000022fb  memcpy                               
+00002397  __TI_decompress_lzss                 
+00002401  __TI_auto_init_nobinit_nopinit       
+00002445  __aeabi_d2uiz                        
+00002489  _c_int00_noargs                      
+000024bd  __aeabi_ui2d                         
+000024dd  __TI_zero_init_nomemset              
+000024f9  __TI_decompress_none                 
+00002507  ResetISR                             
+00002513  _system_pre_init                     
+00002517  C$$EXIT                              
+00002517  abort                                
+00002564  __TI_Handler_Table_Base              
+00002570  __TI_Handler_Table_Limit             
+00002578  __TI_CINIT_Base                      
+00002588  __TI_CINIT_Limit                     
+20000000  __stack                              
+20000200  __STACK_END                          
+20000200  __STACK_TOP                          
+200003fe  state                                
+ffffffff  __TI_pprof_out_hndl                  
+ffffffff  __TI_prof_data_size                  
+ffffffff  __TI_prof_data_start                 
+ffffffff  __binit__                            
+ffffffff  __c_args__                           
+ffffffff  binit                                
+UNDEFED   __mpu_init                           
+UNDEFED   _system_post_cinit                   
 
 [95 symbols]
